@@ -1,29 +1,18 @@
-pipeline{
+pipeline {
     agent any
-    environment {
-        PATH = "$PATH: /usr/share/maven/bin"
-    }
-    stages{
-       stage('GetCode'){
-            steps{
-                git 'https://github.com/mallela009/fishmarket.git'
+    stages {
+        stage('SCM') {
+            steps {
+                git url: 'https://github.com/foo/bar.git'
             }
-       }       
-       stage('Build'){
-            steps{
-                echo 'mvn clean package'
+        }
+        stage('build && SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('My SonarQube Server') {
+                    // Optionally use a Maven environment you've configured already
+                    withMaven(maven:'Maven 3.5') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
             }
-         }
-        stage('SonarQube analysis') {
- // def scannerHome = tool 'SonarQubeScanner-4.7.0';
-        steps{
-        withSonarQubeEnv('sonarqube- 9.7.1') { 
-        // If you have configured more than one global server connection, you can specify its name
-//      sh "${scannerHome}/bin/sonar-scanner"
-        echo "mvn sonar:sonar"
-    }
         }
-        }
-       
-    }
-}
