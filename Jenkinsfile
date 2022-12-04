@@ -6,7 +6,7 @@ pipeline{
     stages{
        stage('GetCode'){
             steps{
-                git 'https://github.com/mallela009/sonarjenkins.git'
+                git 'https://github.com/mallela009/fishmarket.git'
             }
          }        
        stage('Build'){
