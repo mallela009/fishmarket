@@ -11,7 +11,7 @@ pipeline{
        }       
        stage('Build'){
             steps{
-                sh 'mvn clean package'
+                echo 'mvn clean package'
             }
          }
         stage('SonarQube analysis') {
@@ -20,7 +20,7 @@ pipeline{
         withSonarQubeEnv('sonarqube- 9.7.1') { 
         // If you have configured more than one global server connection, you can specify its name
 //      sh "${scannerHome}/bin/sonar-scanner"
-        sh "mvn sonar:sonar"
+        echo "mvn sonar:sonar"
     }
         }
         }
