@@ -6,14 +6,9 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'github-jenkins', url: 'https://github.com/mallela009/fishmarket.git']]])
             }
         }
-         stage('build && SonarQube analysis') {
+        stage('SonarQube analysis 1') {
             steps {
-                withSonarQubeEnv('sonarqube-9.7.1') {
-                    // Optionally use a Maven environment you've configured already
-                    withMaven(maven:' Maven 3.6.3') {
-                        sh 'mvn clean package sonar:sonar'
-                    }
-                }
+                sh 'mvn clean package sonar:sonar'
             }
         }
     }
